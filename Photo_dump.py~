@@ -1,0 +1,38 @@
+import json
+import requests
+
+
+'''filename = "/home/lena/PycharmProjects/json_photo2"
+myfile = open(filename, 'w')
+payload = {'access_token' : '0f394115fa04d84601f1cbc891aed0c852e78d024d658ccd62d58501bd2d4019dd9b37398162750bee86f', 'peer_id' : '2000000052', 'media_type' : 'photo','start_from': 254653,'count': '200', 'photo_sizes' : '0', 'v' : '5.67'}
+
+resp = requests.get('https://api.vk.com/method/messages.getHistoryAttachments', params=payload)
+
+myfile.write(resp.content)
+myfile.close()'''
+
+
+filename = "/home/lena/PycharmProjects/json_photo2"
+myfile = open(filename, 'r')
+json_data = json.load(myfile)
+i = 335
+req = requests.get('http://example.com')
+
+for item in json_data:
+    #print(str(item["attachment"]["photo"]["photo_807"]))
+    myfile2 = open("/home/lena/PycharmProjects/photo/" + str(i) + ".jpg", 'wb')
+    if "photo_2560" in item["attachment"]["photo"]:
+        req = requests.get(str(item["attachment"]["photo"]["photo_2560"]))
+    elif "photo_1280" in item["attachment"]["photo"]:
+        req = requests.get(str(item["attachment"]["photo"]["photo_1280"]))
+    elif "photo_807" in item["attachment"]["photo"]:
+        req = requests.get(str(item["attachment"]["photo"]["photo_807"]))
+    elif "photo_604]" in item["attachment"]["photo"]:
+        req = requests.get(str(item["attachment"]["photo"]["photo_604"]))
+
+    myfile2.write(req.content)
+    myfile2.close()
+    i += 1
+
+
+myfile.close()
